@@ -1,0 +1,415 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+typedef struct node
+
+{
+
+ 
+
+    int m,n;
+
+    struct node *next;
+
+}*linklist,S;
+
+linklist create(int c)
+
+{
+
+    linklist l;
+
+    S *p,*q;
+
+    l=(linklist)malloc(sizeof(S));
+
+    l->next=NULL;
+
+    q=l;
+
+    getchar();
+
+    while(c--)
+
+    {
+
+        p=(linklist)malloc(sizeof(S));
+
+        scanf("(%d,%d)",&p->m,&p->n);
+
+        q->next=p;
+
+        q=p;
+
+    }   
+
+    getchar();
+
+    q->next=NULL;
+
+    return l;
+
+}
+
+ 
+
+void ari(linklist l,int k)
+
+{
+
+    S *p;
+
+    int flag=0; 
+
+    int i,j;
+
+    p=l->next;
+
+    int h;
+
+    while(p!=NULL)
+
+    {
+
+        h=p->m;
+
+       
+if(p->n==0&&p->m!=0)
+
+        h=p->m;
+
+        if(p->m==0)
+
+        h=0;
+
+       
+if(p->n>0&&p->m!=0)
+
+        {
+
+            for(i=1;i<=p->n;i++)
+
+            {
+
+                h*=k;
+
+            }
+
+        }
+
+       
+if(p->n<0&&p->m!=0)
+
+        {
+
+            for(j=-1;j>=p->n;j--)
+
+            h/=k;
+
+        }
+
+        flag+=h;
+
+        p=p->next;
+
+    } 
+
+    printf("%d",flag);
+
+}
+
+int print(linklist l)
+
+{
+
+    S *p,*q;
+
+    char X;
+
+    int flag=1; 
+
+    int s=0;
+
+    int i=0,j=0;
+
+    p=q=l->next;
+
+    while(q!=NULL)
+
+    {
+
+        if(q->m==0)
+
+        i++;
+
+        j++;
+
+        q=q->next;  
+
+    }
+
+    if(i==j)
+
+    {
+
+        printf("0");
+
+        return 0;
+
+    }
+
+    while(p!=NULL)
+
+    {
+
+        
+
+        if(p->m!=1&&p->m!=-1&&p->m!=0&&p->m>0)
+
+        {
+
+        
+
+        
+
+            if(p->n==1)
+
+            {
+
+                if(flag!=1)
+
+                printf("+");
+
+                printf("%dX",p->m); 
+
+                flag++;
+
+            }
+
+        
+
+             if(p->n==0)
+
+            {
+
+                   if(flag!=1)
+
+                   printf("+");
+
+                   printf("%d",p->m);
+
+                   flag++;
+
+            }
+
+        
+
+            if(p->n!=1&&p->n!=0)
+
+            {
+
+                if(flag!=1)
+
+                printf("+");
+
+                printf("%dX^%d",p->m,p->n);
+
+                flag++;
+
+            }
+
+                
+
+        }
+
+        if(p->m!=1&&p->m!=-1&&p->m!=0&&p->m<0)
+
+        {
+
+            if(p->n==1)
+
+            {
+
+                printf("%dX",p->m);
+
+                flag++;
+
+            }
+
+            
+
+             if(p->n==0)
+
+            {
+
+                   printf("%d",p->m);
+
+                   flag++;
+
+            }
+
+        
+
+            if(p->n!=0&&p->n!=1)
+
+            {
+
+                   printf("%dX^%d",p->m,p->n);
+
+                   flag++;
+
+                
+
+            }
+
+            
+
+        }
+
+            if(p->m==1)
+
+            {
+
+                if(flag!=1)
+
+                putchar('+');
+
+                if(p->n==0)
+
+                {
+
+                   printf("1");
+
+                   flag++;
+
+                }
+
+                
+
+                 if(p->n==1)
+
+                {
+
+                   
+
+                   printf("X");
+
+                   flag++;
+
+                }
+
+                
+
+                if(p->n!=1&&p->n!=0)
+
+                {
+
+                   printf("X^%d",p->n);
+
+                   flag++;
+
+                   
+
+                }
+
+                       
+
+            }
+
+            if(p->m==-1)
+
+            {
+
+                if(p->n==0)
+
+                {
+
+                       printf("-1");
+
+                   flag++;
+
+                }
+
+            
+
+                if(p->n==1)
+
+                {
+
+                   printf("-X");
+
+                   flag++;
+
+                }
+
+                
+
+                if(p->n!=1&&p->n!=0)
+
+                {
+
+                   printf("-X^%d",p->n);
+
+                   flag++;
+
+                   
+
+                }
+
+            
+
+            }
+
+            if(p->m==0)
+
+            {
+
+                printf("");
+
+            }
+
+        
+
+        
+
+        
+
+            p=p->next;
+
+        
+
+    } 
+
+}
+
+ 
+
+ 
+
+int main()
+
+{
+
+    
+
+    linklist la,lc;
+
+    int a,b;
+
+    scanf("%d",&a);
+
+    la=create(a);
+
+    scanf("%d",&b);
+
+    //print(la);
+
+    ari(la,b);
+
+    return 0;
+
+} 
+
