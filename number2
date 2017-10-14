@@ -1,0 +1,47 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<math.h>
+
+int main()
+
+{
+
+    int m,n;
+
+    int i,j,k,l,z;
+
+    int f,g,h;
+
+    scanf("%d
+%d",&m,&n);
+
+    for(i=m;i<=n;i++){
+
+        j=i/1000;
+
+        k=i/100%10;
+
+        l=i%10;
+
+        z=i/10%10;
+
+        f=j*10+k,g=l+z*10;
+
+        h=g+f;
+
+        if(h*h==i)
+
+        printf("%d\n",i);
+
+    }
+
+    return 0;
+
+    
+
+} 
+
