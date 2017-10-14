@@ -1,0 +1,148 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<string.h>
+
+#include<malloc.h>
+
+typedef struct node
+
+{
+
+    int a;
+
+    struct node *next;
+
+}S,*linklist;
+
+linklist create()
+
+{
+
+    linklist L;
+
+    S *p,*r;
+
+    L=(linklist)malloc(sizeof(linklist));
+
+    L->next=NULL;
+
+    int n;
+
+    printf("\n请输入一个数字(你想存几个数就输入几)\n");
+
+    scanf("%d",&n);
+
+    p=L;
+
+    while(n)
+
+    {
+
+        r=(S*)malloc(sizeof(S));
+
+        scanf("%d",&r->a);
+
+        p->next=r;
+
+        p=r;
+
+        r=r->next;
+
+        n--;
+
+    }
+
+    p->next=NULL;
+
+    return L;
+
+}
+
+void print(linklist L)
+
+{
+
+    S *p;
+
+    p=L->next;
+
+    while(p!=NULL)
+
+    {
+
+        printf("%4d",p->a);
+
+        p=p->next;
+
+    }
+
+    printf("\n");
+
+}
+
+void sort(linklist L)
+
+{
+
+    S *p,*r,*t;
+
+    int temp;
+
+    //r=L;
+
+    for(r=L->next;r->next!=NULL;r=r->next)
+
+    {
+
+        t=r;
+
+        for(p=r->next;p!=NULL;p=p->next)
+
+            
+
+            {
+
+            if(p->a<=r->a)
+
+                t=p;
+
+            if(t!=r)
+
+            {
+
+                temp=r->a;
+
+                r->a=p->a;
+
+                p->a=temp;
+
+            }
+
+        }
+
+    }
+
+}
+
+int main() 
+
+{
+
+    linklist L;
+
+    L=create();
+
+    print(L);
+
+    sort(L);
+
+    print(L);
+
+    return 0;
+
+} 
+
