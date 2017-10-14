@@ -1,0 +1,154 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<malloc.h>
+
+#include<time.h>
+
+typedef struct node
+
+{
+
+    int a;
+
+    int m;
+
+    struct node *next;
+
+}S,*linklist;
+
+linklist create(int n,int k)
+
+{
+
+    linklist L;
+
+    S *H,*p;
+
+    H=L=NULL;
+
+    int i=0;
+
+    while(n--)
+
+    {
+
+        i++;
+
+        p=(S *)malloc(sizeof(S));
+
+        p->a=i;
+
+        p->m=k;
+
+        if(L==NULL)
+
+        {
+
+            L=p;
+
+            H=p;
+
+            continue;
+
+        }
+
+        H->next=p;
+
+        p->next=L;
+
+        H=p;
+
+    }
+
+    return L;
+
+}
+
+ 
+
+void sort(linklist L,int n,int c)
+
+{
+
+    S *r,*p;
+
+    int j;
+
+    p=L;
+
+    int s;
+
+    int i;
+
+    do
+
+    {
+
+        i=1;
+
+    
+
+        while(i!=c)
+
+        {
+
+            r=p;
+
+            p=p->next;
+
+            i++;
+
+        }
+
+        c=p->m;
+
+        j=p->a;
+
+        printf("%d ",j);
+
+        r->next=p->next;
+
+        p=r->next;
+
+        n--;
+
+    }while(n!=0);
+
+    
+
+        
+
+}
+
+ 
+
+int main()
+
+{
+
+ 
+
+    linklist L;
+
+    int n;
+
+    int m;
+
+    scanf("%d",&n);
+
+    scanf("%d",&m);
+
+    L=create(n,m);
+
+    sort(L,n,m);
+
+ 
+
+    return 0;
+
+} 
+
