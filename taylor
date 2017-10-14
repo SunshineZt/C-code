@@ -1,0 +1,45 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<math.h>
+
+int main()
+
+{
+
+    int n=1,count=1;
+
+    float k,x;
+
+    float sum;
+
+    scanf("%f",&x);
+
+    sum=x;
+
+    k=x;
+
+    while(fabs(k)>=1e-5){
+
+        k=-k*x*x/((n+1)*(n+2));
+
+        sum=sum+k;
+
+        count++;
+
+        n+=2;
+
+        
+
+    }
+
+    printf("sin(x)=%f %f
+%d",sum,k,count);
+
+    return 0;
+
+} 
+
