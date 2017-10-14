@@ -1,0 +1,55 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<math.h>
+
+long fac(int n)
+
+{
+
+    int f;
+
+    if(n==0)
+
+    f=1;
+
+    else f=n*fac(n-1); 
+
+    return f;
+
+}
+
+int main()
+
+{
+
+    long y;
+
+    int n;
+
+    printf("input a integer
+number :\n");
+
+    scanf("%d",&n);
+
+    if(n<0)
+
+    printf("data error\n");
+
+    else
+
+    {
+
+        y=fac(n);
+
+        printf("%d!=%ld",n,y);
+
+    }
+
+    return 0;
+
+}
+
