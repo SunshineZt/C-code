@@ -1,0 +1,44 @@
+
+
+#include<stdio.h>
+
+int main()
+
+{
+
+    int x,a,b;
+
+    float F,S;
+
+    while(scanf("T=%d:%d,S=%fkm\n",&a,&b,&S)!=EOF){
+
+    if(a>6&&a<22){
+
+    if(S<=3) F=9;
+
+    else if(S>3&&S<=10)
+F=9+(int)(S-2)*2;
+
+        else 
+F=9+7*2+(int)(S-9)*2.5;
+
+     }
+
+    else{
+
+     if(S<=3) F=18;
+
+    else if(S>3&&S<=10)
+F=18+(int)(S-2)*4;
+
+        else 
+F=18+7*4+(int)(S-19)*5;}
+
+        printf("F=%.1fyuan\n",F);
+
+        }
+
+        return 0;
+
+        } 
+
