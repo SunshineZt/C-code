@@ -1,0 +1,68 @@
+
+
+#include<stdio.h> 
+
+#include<stdlib.h> 
+
+int a(int n) 
+
+{   
+
+    int j;  
+
+    int t=1;   
+
+    for(j=2;j<n;j++)   
+
+   {     
+
+       if(n%j==0)    
+
+       {      
+
+          t=0;
+
+          return 0;    
+
+          break;   
+
+        }  
+
+   } 
+
+
+   if(t==1)   
+
+      return 1; 
+
+ }
+
+ 
+
+ main()
+
+{
+
+    int i;
+
+    for (i=2;i+2<1000;++i)
+
+    {
+
+        if (a(i)&&a(i+2))
+
+        {
+
+            printf("%d %d   ",i,i+2);
+
+        }
+
+    }
+
+ 
+
+   
+system("pause");
+
+}
+
