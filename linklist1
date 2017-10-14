@@ -1,0 +1,248 @@
+
+
+#include<stdio.h>  
+
+#include<malloc.h>  
+
+typedef int ElemType;  
+
+typedef int Status;  
+
+#define TRUE    1  
+
+#define ERROR   0  
+
+#define OK      1  
+
+#define LEN     sizeof( struct LNode
+)  
+
+typedef struct LNode  
+
+{  
+
+    ElemType data;  
+
+    struct LNode * next;  
+
+}LNode;  
+
+  
+
+LNode * creat()  
+
+{//创建一个单链表，输入0表示输入结束。当然结束字符可以任意修改，不喜欢0结束的同学修改吧。改函数的bug，  
+
+//创建链表时，不能用0作为第一个结点。不过用插入函数，可以在第一个位置插入0.大家注意吧  
+
+    LNode * head;  
+
+    LNode *p1, *p2;  
+
+      
+
+    p1 = p2 = ( struct LNode * )
+malloc ( LEN ) ; 
+
+    scanf( "%d", &p1
+->data );  
+
+    head = NULL;  
+
+    while( p1 ->data != 0 )  
+
+    {  
+
+        if ( head == NULL ) head =
+p1;  
+
+        else p2 ->next = p1;  
+
+        p2 = p1;  
+
+        p1 = ( struct LNode * )
+malloc ( LEN );  
+
+        scanf( "%d",
+&p1 ->data );  
+
+    }  
+
+    p2 ->next = NULL;  
+
+    return ( head );  
+
+}  
+
+void outPut( struct LNode * head )  
+
+{  
+
+    LNode *p;  
+
+    p = head;  
+
+    while( p != NULL )  
+
+    {  
+
+        printf( "%5d ", p
+->data );  
+
+        p = p ->next;  
+
+    }  
+
+    printf( "/n" );  
+
+}  
+
+Status ListInsert( LNode *L, ElemType e, int i )//在带单链表L中第i个位置之后插入元素e  
+
+{  
+
+    LNode *s = ( LNode * ) malloc (
+LEN );  
+
+      
+
+    if( i == 0 )//在头部插入节点  
+
+    {  
+
+        s ->data = e;  
+
+        s ->next = L;  
+
+        L = s;  
+
+   
+}  
+
+    else  
+
+    {  
+
+        LNode *p = L;  
+
+        int j = 0;  
+
+          
+
+        while( p && j < i
+- 1 )  
+
+        {  
+
+            p = p ->next;  
+
+            j++;  
+
+        }  
+
+        if( !p || j > i ) return
+ERROR;  
+
+        s ->data = e;  
+
+        s ->next = p
+->next;  
+
+        p ->next = s;  
+
+    }  
+
+    return OK;  
+
+}  
+
+Status ListDelete( LNode *L, ElemType e, int i )  
+
+{//删除第i个位置元素，并由e返回其值  
+
+    LNode *p ,*q;  
+
+    int j = 1;  
+
+    p =L;  
+
+  
+
+    while( p ->next && j
+< i - 1 )  
+
+    {  
+
+        p = p ->next;  
+
+        j++;  
+
+    }  
+
+    if( ! ( p ->next ) || j >
+i - 1 ) return ERROR;  
+
+      
+
+    q = ( LNode * ) malloc ( LEN
+);  
+
+    q = p ->next;  
+
+    p ->next = q ->next;  
+
+    e = q ->data;  
+
+    free( q );  
+
+    return OK;  
+
+}  
+
+  
+
+main()  
+
+{  
+
+    LNode *head;  
+
+    int i = -1;             //它的值表示插入或删除函数的返回值，以确定函数运行是否正确  
+
+    ElemType insert = 10;  
+
+    int InsertLoc = 1;      //插入位置 
+
+
+    int DeleteLoc = 2;      //删除位置 
+
+
+    int elem = 0;           //返回删除位置的值  
+
+      
+
+    head = creat();  
+
+    i = ListInsert( head, insert,
+InsertLoc );  
+
+    if ( i == 0 ) printf(
+"Insert ERROR/n" );  
+
+    outPut ( head );  
+
+    i = ListDelete( head, elem,  DeleteLoc ); 
+
+
+    if ( i == 0 ) printf(
+"Delete ERROR/n" );  
+
+      
+
+    outPut( head ); 
+
+
+      
+
+}   
+
