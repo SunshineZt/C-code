@@ -1,0 +1,181 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<malloc.h>
+
+//#include<coino.h>
+
+typedef struct node
+
+{
+
+    int i;
+
+    struct
+node *next;
+
+}S,*Linklist;
+
+Linklist create()
+
+{
+
+    int n;
+
+    Linklist
+L,head;
+
+    S *p;
+
+    L=(Linklist)malloc(sizeof(Linklist));
+
+    L->next=NULL;
+
+    head=L;
+
+    printf("\n请输入你要输入级个数字\n");
+
+    scanf("%d",&n);
+
+    while(n--)
+
+    {
+
+        p=(S
+*)malloc(sizeof(S));
+
+        printf("\n请输入数字\n");
+
+        scanf("%d",&p->i);
+
+        head->next=p;
+
+        head=p;
+
+ 
+
+    }
+
+        p->next=NULL;
+
+        return
+L;
+
+}
+
+void print (Linklist L)
+
+{
+
+    S *p;
+
+    p=L->next;
+
+    while(p!=NULL)
+
+    {
+
+        printf("%5d",p->i);
+
+        p=p->next;
+
+    }
+
+}
+
+void sort(Linklist L)
+
+{
+
+    S
+*p,*m,*r,*tail;
+
+    tail=NULL;
+
+    while(L->next->next!=tail)
+
+    {
+
+        for(m=L->next,r=L;m->next!=tail;m=m->next,r=r->next)
+
+        {
+
+            p=m->next;
+
+            if((p->i)<(m->i))
+
+            {
+
+                r->next=p;
+
+                m->next=p->next;
+
+                p->next=m;
+
+                m=r->next;
+
+            }
+
+        }
+
+        tail=m;
+
+    }
+
+}
+
+/*  while(head->next->next!=tail)
+
+                         {
+
+                                for
+(m=head->next,r=head;m->next!=tail;r=r->next,m=m->next)
+
+                                 {
+
+                                      p=m->next;
+
+                                      if ((m->i)>(p->i))
+
+                                      {
+
+                                          r->next = p;
+
+                                          m->next = p->next;
+
+                                          p->next =m;
+
+                                          m= r->next;
+
+                                      }
+
+                                 }
+
+                                 tail=m;
+
+                           }
+
+*/
+
+ 
+
+int main()
+
+{
+
+    Linklist
+L;
+
+    L=create();
+
+    sort(L);
+
+    print(L);
+
+    return 0;
+
+}
+
