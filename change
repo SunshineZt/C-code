@@ -1,0 +1,162 @@
+
+
+#include<stdio.h>
+
+#define N  100
+
+int main()
+
+{
+
+    int
+a[N],b[N],c[N],i,k,n,min,max,min1,max1;
+
+    int
+temp1,temp2,min2,min3,max2,max3;
+
+    printf("Please input
+number:");
+
+    scanf("%d",&n);
+
+    printf("\nPlease input every
+number:");
+
+    for(i=0;i<n;i++)
+
+    scanf("%d",&a[i]);
+
+    k=n/2;
+
+    min=0,min1=k;
+
+    max=0,max1=k;
+
+    printf("\nPlease iput
+b:");
+
+    for(i=0;i<k;i++)
+
+    printf("%4d",b[i]);
+
+    for(i=1;i<k;i++)
+
+    {
+
+        if(b[i]>b[max])
+
+        max=i;
+
+        if(b[i]<b[min])
+
+        min=i;
+
+    }
+
+    printf("\nPlease input
+c:");
+
+    for(i=k;i<n;i++)
+
+    printf("%4d",c[i]);
+
+    for(i=k+1;i<n;i++)
+
+    {
+
+            if(c[i]>c[max1])
+
+        max1=i;
+
+        if(c[i]<c[min1])
+
+        min1=i;
+
+    }
+
+        if(b[max]>c[max1])
+
+        {
+
+            max2=max;
+
+            max3=max1;
+
+            if(b[min]<c[min1]){
+
+            min2=min;
+
+            min3=min1;
+
+        }
+
+            else {
+
+            min2=min1;
+
+            min3=min;
+
+        }
+
+    }
+
+        if(b[max]<c[max1])
+
+        {
+
+            max2=max1;
+
+            max3=max;
+
+            if(b[min]<c[min1]){
+
+            min2=min;
+
+            min3=min1;
+
+        }
+
+            else{
+
+            min2=min1;
+
+            min3=min;
+
+        }
+
+    }
+
+        for(i=0;i<n;i++)
+
+    {
+
+        temp1=a[min2];
+
+        a[min2]=a[max2];
+
+        a[max2]=temp1;
+
+        temp2=a[min3];
+
+        a[min3]=a[max3];
+
+        a[max3]=temp2;
+
+        printf("%d",a[i]);
+
+    
+
+    }
+
+    return 0;
+
+            
+
+    
+
+    
+
+    
+
+} 
+
