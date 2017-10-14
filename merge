@@ -1,0 +1,60 @@
+
+
+#include<stdio.h>
+
+int main()
+
+{
+
+    int a[10],b[5],i,j,m,count=5;
+
+    printf("Please input arry
+a:");
+
+    for(i=0;i<5;i++)
+
+    scanf("%d",&a[i]);
+
+    printf("\nPlease input arry
+b:");
+
+    for(i=0;i<5;i++)
+
+    scanf("%d",&b[i]);
+
+    for(i=0;i<5;i++){
+
+        for(j=0;j<count;j++){
+
+            if(b[i]<a[j]){
+
+                count++;
+
+                for(m=count-1;m>=j;m--){
+
+                   a[m]=a[m-1];
+
+                   
+
+                }
+
+                a[j]=b[i];
+
+                break;
+
+            }
+
+            } 
+
+                for(i=0;i<count;i++);
+
+        printf("%d",a[i]);
+
+        } 
+
+    return 0;
+
+}
+
+     
+
