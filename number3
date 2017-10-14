@@ -1,0 +1,67 @@
+
+
+#include<stdio.h>
+
+int max_common_divisor(int x,int y)//求最大公约数
+
+{
+
+    int r,a;
+
+    while(r!=0)
+
+    {
+
+        r=x%y;
+
+        x=y;
+
+        y=r;
+
+        if(r==0)
+
+        {
+
+            return x;
+
+        }
+
+    }
+
+  return 0;
+
+}
+
+int min_common_multiple(int x,int y)//求最小公倍数
+
+{
+
+    int b;
+
+    b=(x*y)/max_common_divisor(x,y);//最小公倍数为两个数之积除以最大公约数
+
+    return b;
+
+} 
+
+int main()
+
+{
+
+    int m,n;
+
+    printf("请输入两个数:");
+
+    scanf("%d
+%d",&m,&n);
+
+    printf("输入的两个数的最大公约数是:%d\n",max_common_divisor(m,n));
+
+
+    printf("输入的两个数的最小公倍数是:%d\n",min_common_multiple(m,n));
+
+    printf("输入的两个数的最小公倍数和最大公约数的差值是:%d
+",min_common_multiple(m,n)-max_common_divisor(m,n)); //打印差值
+
+} 
+
