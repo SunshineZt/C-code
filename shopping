@@ -1,0 +1,153 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<string.h>
+
+#define N   100
+
+struct data
+
+{
+
+    int year;
+
+    int month;
+
+    int day;
+
+};
+
+struct   electrical
+
+{
+
+    int phone;
+
+    char name1[20];
+
+};
+
+struct  food
+
+{
+
+    int day1;
+
+};
+
+struct shop
+
+{
+
+    char name[10];
+
+    char  t;
+
+    struct data date ;
+
+    int price;
+
+    int number;
+
+union  type
+
+{
+
+    struct  electrical 
+equipment;
+
+    struct   food eat; 
+
+}b;
+
+};
+
+int main()
+
+{
+
+    struct shop a[N];
+
+    int i,n;
+
+    printf("请输入商品的个数:");
+
+    scanf("%d",&n);
+
+    printf("请输入商品的种类:\n");
+
+    for(i=0;i<n;i++)
+
+    {
+
+        printf("NO.%d.a
+is:",i+1);
+
+        scanf("%s %c %d %d %d %d
+%d",a[i].name,&a[i].t,&a[i].date.year,&a[i].date.month,&a[i].date.day,&a[i].price,&a[i].number);
+
+        if(a[i].t=='e'||a[i].t=='E')
+
+        {
+
+            printf("输入家电的信息:");
+
+            scanf("%d
+%s",&a[i].b.equipment.phone,a[i].b.equipment.name1);
+
+        }
+
+        else
+if(a[i].t=='f'||a[i].t=='F')
+
+        {
+
+            printf("输入食品信息:");
+
+            scanf("%d",&a[i].b.eat.day1);
+
+        }
+
+        else
+
+        printf("input
+error!\n");
+
+        
+
+    }
+
+    printf("\n输出所有信息:\n");
+
+    for(i=0;i<n;i++)
+
+    {
+
+        printf("商品名称:%-8s,商品种类:%c,日期:%d.%d.%d,价格:%d,数量:%d\t",a[i].name,a[i].t,a[i].date.year,a[i].date.month,a[i].date.day,a[i].price,a[i].number);
+
+         if(a[i].t=='e'||a[i].t=='E')
+
+        {
+
+            printf("家电的电话:%d,保修单位:%s\n",a[i].b.equipment.phone,a[i].b.equipment.name1);
+
+        }
+
+        else
+if(a[i].t=='f'||a[i].t=='F')
+
+        {
+
+            scanf("保质期:%d\n",&a[i].b.eat.day1);
+
+        }   
+
+    }
+
+    return 0;
+
+} 
+
