@@ -1,0 +1,2184 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<string.h>
+
+#include<windows.h> 
+
+#include<conio.h>
+
+#include<ctype.h>
+
+# define LEN sizeof(struct person)
+
+HANDLE hInput;  
+
+INPUT_RECORD inRec;
+
+DWORD numRead;
+
+void jiami();
+
+typedef struct person
+
+{
+
+    char name[20];
+
+    int num;
+
+    char qq[20];
+
+    char weixin[20];
+
+    struct person *next;
+
+};
+
+int mouse(int *x,int *y)
+
+{
+
+    HWND
+hwnd=FindWindow("ConsoleWindowClass",NULL);
+
+    hInput =
+GetStdHandle(STD_INPUT_HANDLE); 
+
+    int X,Y;
+
+    while(1){
+
+            COORD pos = {0,0};
+
+            ReadConsoleInput(hInput,
+&inRec, 1, &numRead);
+
+            pos =
+inRec.Event.MouseEvent.dwMousePosition;
+
+            Y=(int)pos.Y;
+
+            X=(int)pos.X;
+
+            if (inRec.EventType ==
+MOUSE_EVENT && inRec.Event.MouseEvent.dwButtonState ==
+FROM_LEFT_1ST_BUTTON_PRESSED)
+
+                {
+
+                    *x=X;
+
+                    *y=Y;
+
+                    return 0;
+
+                }
+
+          }
+
+}
+
+void go(int x,int y)
+
+{
+
+    HANDLE hOut;
+
+hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+COORD pos={x,y};
+
+SetConsoleCursorPosition(hOut,pos);
+
+}
+
+void clean()
+
+{
+
+    go(0,0);
+
+    int i;
+
+    for(i=0;i<2000;i++)
+
+    printf(" ");
+
+    go(0,0);
+
+}
+
+void print(person *head);
+
+person *Create()
+
+{
+
+    person *m,*r,*head;
+
+    int n;
+
+    char choice;
+
+    head=(person*)malloc(LEN);
+
+    head->next=NULL;
+
+    m=head;
+
+    do
+
+    {
+
+        r=(person*)malloc(LEN);
+
+        system("cls");
+
+        printf("             \n");
+
+        printf("             \n");
+
+        printf("             \n");
+
+     printf("================================================================================\n");    
+
+        printf("                        请输入姓名:");
+
+        scanf("%14s",r->name);
+
+        printf("                        请输入成绩:");
+
+        scanf("%14d",&r->num);
+
+        printf("                        请输入qq:");
+
+        scanf("%14s",r->qq);
+
+        printf("                        请输入微信:");
+
+        scanf("%14s",r->weixin);
+
+     printf("================================================================================\n");    
+
+        m->next=r;
+
+        m=r;
+
+        printf("Continue?(y/n)");
+
+        fflush(stdin);
+
+        scanf("%c",&choice);   
+
+    }while(choice=='y');
+
+    m->next=NULL;
+
+    return head;
+
+}
+
+void save(person *head)
+
+{
+
+    person *stu;
+
+    FILE *fp;
+
+    fp=fopen("d:\\ssl.txt","wt");
+
+    if(fp==NULL)
+
+    {
+
+        printf("写文件出错，按任意键退出！");
+
+        getchar();
+
+        exit(1);
+
+    }
+
+    for(stu=head->next;stu->next!=NULL;stu=stu->next)
+
+        fprintf(fp,"%s %d %s
+%s\n",stu->name,stu->num,stu->qq,stu->weixin);
+
+    fprintf(fp,"%s %d %s
+%s",stu->name,stu->num,stu->qq,stu->weixin);
+
+    printf("\n文件已保存成功!\n");
+
+    fclose(fp);
+
+}
+
+person *read()
+
+{
+
+    person *head,*r,*stu;
+
+    FILE *fp;
+
+    if((fp=fopen("d:\\ssl.txt","rt"))==NULL)
+
+    {
+
+        printf("读文件出错，按任意键退出！");
+
+        getchar();
+
+        exit(1);
+
+    }
+
+    
+
+    head=(person*)malloc(LEN);
+
+    head->next=NULL;
+
+    r=head;
+
+    
+
+while(!feof(fp))
+
+    {
+
+    
+
+        stu=(person*)malloc(LEN);
+
+        fscanf(fp,"%s %d %s
+%s",stu->name,&stu->num,stu->qq,stu->weixin);
+
+        r->next=stu;
+
+        r=stu;
+
+    }
+
+ 
+
+    r->next=NULL;
+
+    fclose(fp);
+
+ 
+
+    return head;
+
+}
+
+void printf_all(person * head)
+
+{
+
+    read();
+
+    person *pnew;
+
+    pnew = head->next;
+
+    while (pnew != NULL)
+
+    {
+
+        printf("\t\t%-10s %-10d
+%-6s    
+%-6s",pnew->name,pnew->num,pnew->qq,pnew->weixin);
+
+        printf("\n");
+
+        pnew = pnew->next;
+
+    }
+
+    
+
+    
+
+}
+
+ 
+
+ 
+
+void print(person *head)
+
+{
+
+    struct person *m;
+
+    m=head->next;
+
+ printf("\n================================================================================\n");
+
+    printf("\n\n\t★-----姓名------成绩---------QQ----------微信-----★\n");
+
+    while(m!=NULL)
+
+    {
+
+        printf("\t\t%-10s %-10d
+%-6s    
+%-6s",m->name,m->num,m->qq,m->weixin);
+
+        printf("\n");
+
+        m=m->next;
+
+    }
+
+}
+
+void insert(person *head)
+
+{
+
+    person *m,*r;
+
+    m=head;
+
+    int n;
+
+    char choice;
+
+    do
+
+    {
+
+        system("cls");
+
+     
+r=(person*)malloc(LEN);
+
+     
+printf("            
+\n");
+
+     
+printf("            
+\n");
+
+     
+printf("            
+\n");
+
+     
+printf("================================================================================\n");    
+
+        printf("                        请增添姓名:");
+
+        scanf("%14s",r->name);
+
+        printf("                        请增添成绩:");
+
+        scanf("%14d",&r->num);
+
+        printf("                        请增添qq:");
+
+        scanf("%14s",r->qq);
+
+        printf("                        请增添微信:");
+
+        scanf("%14s",r->weixin);
+
+     printf("================================================================================\n");    
+
+     
+r->next=m->next;
+
+     
+m->next=r;
+
+     
+printf("Continue?(y/n)");
+
+        fflush(stdin);
+
+        scanf("%c/",&choice);  
+
+    }while(choice=='y');
+
+}
+
+void Delete(person *head)
+
+{
+
+    person *m,*t;
+
+    char a[10];
+
+    char choice;
+
+    int change=0;
+
+    do
+
+    {
+
+        m=head;
+
+        t=m->next;
+
+      
+system("cls");
+
+      
+printf("            
+\n");
+
+      
+printf("            
+\n");
+
+      
+printf("================================================================================\n");    
+
+      
+printf("                       
+请输入想删除人的名字:");
+
+      
+scanf("%s",a);
+
+      
+while(t!=NULL)
+
+      
+{
+
+    
+
+           
+
+          if(strcmp(a,t->name)==0)
+
+          {
+
+             m->next=t->next;
+
+             t=m->next;
+
+             change=1;
+
+             printf("\n");
+
+             printf("                  删除成功！\n\n                若要继续删除请输入y,若要结束请输入n。\n");
+
+          }
+
+          else
+
+          {
+
+             m=m->next;
+
+             t=t->next;
+
+             if(t==NULL&&change==0)
+
+             {
+
+                 printf("                       \n");
+
+                 printf("                      
+未找到这个人！请重新输入或结束。\n");
+
+             }
+
+                
+
+                
+
+          }
+
+           
+
+       }
+
+       printf("                       \n");
+
+      
+printf("\t\t\tContinue?(y/n)");
+
+        fflush(stdin);
+
+        scanf("%c",&choice);
+
+        getchar ();
+
+        
+
+    }while(choice=='y');
+
+}
+
+void change(person *head)
+
+{
+
+    person *m,*t;
+
+    char a[10];
+
+    int x=1,y=0,g=1; 
+
+    char choice;
+
+    
+
+    do
+
+    {
+
+        m=head;
+
+      
+t=m->next;
+
+      
+system("cls");
+
+      
+printf("\n");
+
+      
+printf("\n");
+
+      
+printf("\n");
+
+       
+printf("================================================================================\n");
+
+       
+printf("================================================================================\n");
+
+        printf("                            要修改请按1，不修改请按0:");
+
+        scanf("%d",&g);
+
+        if(g!=0)
+
+        {
+
+            m=head;
+
+        t=m->next;
+
+            system("cls");
+
+      
+printf("\n");
+
+      
+printf("\n");
+
+      
+printf("\n");
+
+       
+printf("================================================================================\n");
+
+       
+printf("================================================================================\n");
+
+      
+printf("                           
+请输入要修改的姓名:");
+
+      
+ scanf("%s",a);
+
+        printf("\n");
+
+      
+printf("\n");
+
+      
+printf("\n");
+
+           while(t!=NULL)
+
+           {
+
+               if(strcmp(a,t->name)==0&&x!=0)
+
+                {
+
+                   y=1;
+
+                   do
+
+                   { 
+
+     
+               system("cls");
+
+     
+               printf("\n");
+
+                     printf("\n");
+
+                    
+printf("================================================================================\n");
+
+                    
+printf("================================================================================\n");
+
+                     printf("
+|--------------------------  ★　1.修改学生名字　★　------------------------|\n\n");
+
+                     printf("
+|--------------------------  ★　2.修改学生成绩　★　------------------------|\n\n");
+
+                     printf("
+|--------------------------  ★　3.修改学生qq　  ★　------------------------|\n\n");
+
+                     printf("
+|--------------------------  ★　4.修改学生微信　★　------------------------|\n\n");
+
+                     printf("
+|--------------------------  ★　0.退出        　★　------------------------|\n\n");
+
+                     printf("                              请输入要修改项:");
+
+                    
+scanf("%14d",&x);
+
+     
+
+
+                     switch(x)
+
+                     {
+
+                        case 1:
+
+                          system("cls");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                         
+printf("================================================================================\n");    
+
+                          printf("                        请修改姓名:");
+
+                         
+scanf("%14s",t->name);
+
+                          system("cls");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                         printf("\t\t   ★★★★★★修改成功!★★★★★★");
+
+                         Sleep(2000); 
+
+                         break;
+
+                        case 2:
+
+                          system("cls");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                         
+printf("================================================================================\n");    
+
+                          printf("                        请修改成绩:");
+
+                         
+scanf("%14d",&t->num);
+
+                          system("cls");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                         printf("\t\t   ★★★★★★修改成功!★★★★★★");
+
+                         Sleep(2000); 
+
+                         break;
+
+                        case 3:
+
+                          system("cls");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                         
+printf("================================================================================\n");    
+
+                          printf("                        请修改qq:");
+
+                         
+scanf("%14s",t->qq);
+
+                          system("cls");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                         printf("\t\t   ★★★★★★修改成功!★★★★★★");
+
+                         Sleep(2000); 
+
+                         break;
+
+                        case 4:
+
+                          system("cls");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                         
+printf("================================================================================\n");    
+
+                          printf("                        请修改微信:");
+
+                         
+scanf("%14s",t->weixin);
+
+                          system("cls");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                         printf("\t\t   ★★★★★★修改成功!★★★★★★");
+
+                         Sleep(2000); 
+
+                          break;
+
+                        case 0:
+
+                          system("cls");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("             \n"); 
+
+                         /*printf("\t\t   ★★★★★★还要继续修改吗★★★★★★");
+
+                         printf("\n");
+
+                         printf("\n");
+
+                         printf("                        若要请按1，若不用请按0");
+
+                         scanf("%d",&g); */
+
+                          break;
+
+                        default:
+
+                          system("cls");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("                    ★ ★您输入有误，请重新输入！★ ★"); 
+
+                          Sleep(3000); 
+
+                          break;
+
+                       }
+
+                   }while(x!=0);
+
+                }
+
+                else
+
+                {
+
+                   m=m->next;
+
+                   t=t->next;
+
+                   if(t==NULL&&y==0)
+
+                   {
+
+                       printf("                       \n");
+
+                      printf("                       未找到这个人！请重新输入或结束。\n");
+
+                       Sleep(3000);
+
+                   }
+
+                }
+
+           }
+
+        }
+
+      
+}while(g!=0&&a!=0);
+
+     
+
+      
+
+
+}
+
+void check(person *head)
+
+{
+
+    person *m;
+
+    char a[10];
+
+    char choice;
+
+    int l;
+
+    //m=head->next;
+
+    do
+
+    {
+
+        m=head->next;
+
+        system("cls");
+
+        printf("\n");
+
+      
+printf("\n");
+
+      
+printf("\n");
+
+       
+printf("================================================================================\n");
+
+       
+printf("================================================================================\n");
+
+      
+printf("                           
+ 请输入想查询人的名字:");
+
+      
+scanf("%s",a);
+
+      
+while(m!=NULL)
+
+      
+{
+
+      
+ l=strcmp(a,m->name);
+
+          if(l==0)
+
+          {
+
+            //printf("ahhhh");
+
+            system("cls");
+
+           printf("\n================================================================================\n");
+
+            printf("================================================================================\n");
+
+             printf("\n\n\t\t姓名------成绩---------QQ----------微信--\n");
+
+             printf("\t\t%-10s %-10d %-6s    
+%-6s",m->name,m->num,m->qq,m->weixin);
+
+             printf("\n");
+
+             Sleep(2000);
+
+             break;
+
+          }
+
+          m=m->next;
+
+          if(m==NULL&&l!=0)
+
+                   {
+
+                       printf("                       \n");
+
+                      printf("                       未找到这个人！请重新输入或结束。\n");
+
+                   }
+
+          
+
+      
+}
+
+        printf("Continue?(y/n)");
+
+        fflush(stdin);
+
+        scanf("%c/",&choice);
+
+    }while(choice=='y');
+
+    
+
+}
+
+void sort(person *head)
+
+{
+
+   person *p,*m,*r,*tail;
+
+   tail=NULL;
+
+  
+while(head->next->next!=tail)
+
+   {
+
+      for
+(m=head->next,r=head;m->next!=tail;r=r->next,m=m->next)
+
+     
+{
+
+           p=m->next;
+
+           if
+(m->num>p->num)
+
+           {
+
+               r->next = p;
+
+               m->next =
+p->next;
+
+               p->next =m;
+
+               m= r->next;
+
+           }
+
+      }
+
+      tail=m;
+
+}
+
+              
+system("cls");
+
+                printf("\n");
+
+               printf("\n");
+
+               printf("\n");
+
+               printf("\t\t   ★★★★★★排序成功!★★★★★★");
+
+               print(head);
+
+               Sleep(3000);
+
+}
+
+void sort2(person *head)
+
+{
+
+   person *p,*m,*r,*tail;
+
+   tail=NULL;
+
+  
+while(head->next->next!=tail)
+
+   {
+
+      for
+(m=head->next,r=head;m->next!=tail;r=r->next,m=m->next)
+
+     
+{
+
+           p=m->next;
+
+           if
+(strcmp(m->name,p->name)>0)
+
+           {
+
+               r->next = p;
+
+               m->next = p->next;
+
+               p->next =m;
+
+               m= r->next;
+
+           }
+
+      }
+
+      tail=m;
+
+}
+
+system("cls");
+
+                printf("\n");
+
+               printf("\n");
+
+               printf("\n");
+
+               printf("\t\t   ★★★★★★排序成功!★★★★★★");
+
+               print(head);
+
+               Sleep(3000);
+
+}
+
+void sort3(person *head)
+
+{
+
+   person *p,*m,*r,*tail;
+
+   tail=NULL;
+
+  
+while(head->next->next!=tail)
+
+   {
+
+      for
+(m=head->next,r=head;m->next!=tail;r=r->next,m=m->next)
+
+     
+{
+
+           p=m->next;
+
+           if (strcmp(m->qq,p->qq)>0)
+
+           {
+
+               r->next = p;
+
+               m->next =
+p->next;
+
+               p->next =m;
+
+               m= r->next;
+
+           }
+
+      }
+
+      tail=m;
+
+}
+
+system("cls");
+
+                printf("\n");
+
+               printf("\n");
+
+               printf("\n");
+
+               printf("\t\t   ★★★★★★排序成功!★★★★★★");
+
+               print(head);
+
+               Sleep(3000);
+
+}
+
+void sort4(person *head)
+
+{
+
+   person *p,*m,*r,*tail;
+
+   tail=NULL;
+
+  
+while(head->next->next!=tail)
+
+   {
+
+      for
+(m=head->next,r=head;m->next!=tail;r=r->next,m=m->next)
+
+     
+{
+
+           p=m->next;
+
+           if
+(strcmp(m->weixin,p->weixin)>0)
+
+           {
+
+               r->next = p;
+
+               m->next =
+p->next;
+
+               p->next =m;
+
+               m= r->next;
+
+           }
+
+      }
+
+      tail=m;
+
+}
+
+system("cls");
+
+                printf("\n");
+
+               printf("\n");
+
+               printf("\n");
+
+               printf("\t\t   ★★★★★★排序成功!★★★★★★");
+
+               print(head);
+
+               Sleep(3000);
+
+}
+
+void menu()
+
+{
+
+    int x,p,ch;
+
+    do
+
+    {
+
+     
+system("cls");
+
+     
+system("color 5E");
+
+             person *head;
+
+             head=read();
+
+     
+printf("================================================================================\n");    
+
+     
+printf("\t\t※※※※※※您好，欢迎进入学生管理系统！※※※※※※\n");
+
+     
+printf("================================================================================\n");
+
+
+     
+printf(" |--------------------------  ★　1.初始化学生信息★　------------------------|\n\n");
+
+     
+printf(" |--------------------------  ★　2.增添学生信息　★　------------------------|\n\n");
+
+     
+printf(" |--------------------------  ★　3.删除学生信息　★　------------------------|\n\n");
+
+     
+printf(" |--------------------------  ★　4.修改学生信息　★　------------------------|\n\n");
+
+     
+printf(" |--------------------------  ★　5.查询学生信息　★　------------------------|\n\n");
+
+     
+printf(" |--------------------------  ★　6.排序学生信息　★　------------------------|\n\n");
+
+     
+printf(" |--------------------------  ★　7.打印学生信息　★　------------------------|\n\n");
+
+     
+printf(" |--------------------------  ★　0.退出　        ★　------------------------|\n\n");
+
+     
+printf("================================================================================\n");
+
+     
+printf("\n                        
+请输入序号:"); 
+
+             scanf("%14d",&x);
+
+             switch(x)
+
+            {
+
+              case 0:
+
+                system("cls");
+
+                system("color
+3F");
+
+                printf("             \n");
+
+                printf("             \n");
+
+                printf("             \n");
+
+                printf("             \n");
+
+                printf("             \n");
+
+                printf("             \n");
+
+     
+       printf("================================================================================\n");
+
+                printf("          ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★
+★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★      
+\n");
+
+                printf("             \n");
+
+                printf("\t***************************感谢使用!******************************");
+
+                printf("             \n");
+
+                printf("          ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★
+★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★      
+\n");
+
+               
+printf("================================================================================\n");
+
+                Sleep(3000);
+
+                break;
+
+            case 1:
+
+                system("color
+3F");
+
+               head=Create();
+
+               save(head);
+
+               system("cls");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("\t\t      ★★★★★★输入成功!★★★★★★");
+
+               Sleep(3000);
+
+               system("cls");
+
+               printf("输入成功，输出结果为:\n");
+
+               printf("姓名------成绩---------QQ----------微信---------\n");
+
+               print(head);
+
+               Sleep(3000);
+
+               break;
+
+            case 2:
+
+                system("color
+3F");
+
+               insert(head);
+
+               save(head);
+
+               system("cls");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("\t\t      ★★★★★★插入成功!★★★★★★");
+
+               Sleep(3000);
+
+               system("cls");
+
+               print(head);
+
+               Sleep(3000);
+
+               break;
+
+            case 3:
+
+                system("color
+3F");
+
+                read();
+
+               Delete(head);
+
+               save(head);
+
+      
+       
+
+               system("cls");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("\t\t      ★★★★★★删除成功!★★★★★★");
+
+               Sleep(3000);
+
+               print(head);
+
+                Sleep(3000);
+
+               break;
+
+            case 4:
+
+                system("color
+3F");
+
+               change(head);
+
+               save(head);
+
+             
+
+               system("cls");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("             \n");
+
+               printf("\t\t   ★★★★★★修改成功!★★★★★★");
+
+               Sleep(3000);
+
+               system("cls");
+
+               printf("修改成功，修改后结果为:\n");
+
+               printf("姓名------成绩---------QQ----------微信---------\n");
+
+               print(head);
+
+               break;
+
+            case 5:
+
+               system("color 3F");
+
+               check(head);
+
+               break;
+
+            case 6:
+
+                system("color
+3F");
+
+                read();
+
+                do{
+
+                    fflush(stdin);
+
+                     system("cls");
+
+     
+               printf("\n");
+
+                     printf("\n");
+
+                    
+printf("================================================================================\n");
+
+                    
+printf("================================================================================\n");
+
+                     printf("
+|--------------------------  ★　1.按成绩排序　★　------------------------|\n\n");
+
+                     printf("
+|--------------------------  ★　2.按姓名排序　★　------------------------|\n\n");
+
+                     printf("
+|--------------------------  ★　3.按qq排序　  ★　------------------------|\n\n");
+
+                     printf("
+|--------------------------  ★　4.按微信排序  ★　------------------------|\n\n");
+
+                     printf("
+|--------------------------  ★　0.退出        ★ 
+------------------------|\n\n");
+
+                     printf("                              请输入要排序项:");
+
+                    
+scanf("%14d",&p);
+
+                     switch(p)
+
+                     {
+
+                       case 0:
+
+                        break;
+
+                       case 1:
+
+                        sort(head);
+
+                        break;
+
+                       case 2:
+
+                           sort2(head);
+
+                        break;
+
+                       case 3:
+
+                           sort3(head);
+
+                        break;
+
+                       case 4:
+
+                        sort4(head);
+
+                        break;
+
+                       default:
+
+                         system("cls");
+
+                          printf("             \n");
+
+                          printf("             \n");
+
+                          printf("\n\n\n\t\t   ★★★★★★输入错误!★★★★★★");
+
+                          Sleep(1000);
+
+                        break;
+
+                     } 
+
+                } while(p!=0); 
+
+               save(head);
+
+               break;
+
+             case 7:
+
+                system("color
+3F");
+
+                system("color
+2E");
+
+                    system("cls");
+
+                    printf("             \n");
+
+                    printf("             \n");
+
+                    printf("             \n");
+
+                    printf("             \n");
+
+                    print(head);
+
+                    printf("             \n");
+
+                 printf("================================================================================\n");
+
+                   Sleep(6000);
+
+            default:
+
+               printf("                  您输入错误，请输入您想执行步骤前面的数字");
+
+               break;
+
+           }
+
+           
+
+     
+
+
+    } while(x!=0);
+
+}
+
+void reg()//注册 
+
+{
+
+    char a[40],b[40];
+
+    int m;
+
+    FILE *fp;
+
+    HANDLE hOut;
+
+   
+printf("\n\n\n\n================================================================================\n");
+
+    printf("         ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★
+★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★      
+\n");
+
+    COORD pos1= {31,8}, pos2=
+{29,10}; 
+
+    printf("\t\t\t用户名:\n\n\t\t\t密码:\n\n");
+
+    printf("\n                                   | 注册 |\n\n");
+
+    printf("         ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★
+★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★      
+\n"); 
+
+   
+printf("================================================================================\n");
+
+    hOut =
+GetStdHandle(STD_OUTPUT_HANDLE);     
+
+    SetConsoleCursorPosition(hOut,
+pos1);
+
+    scanf("%s",a);
+
+    SetConsoleCursorPosition(hOut,
+pos2);  
+
+    scanf("%s",b);
+
+    m=strlen(b);
+
+      
+fp=fopen("c:\\yonghuming.txt","w");
+
+      
+if(fp==NULL)
+
+      
+{
+
+          printf("写文件出错，按任意键退出！");
+
+          getchar();
+
+          exit(1);
+
+      
+}
+
+         fprintf(fp,"%s\n",a);
+
+      
+fclose(fp);
+
+         
+fp=fopen("c:\\mima.txt","w");
+
+          if(fp==NULL)
+
+          {
+
+             printf("写文件出错，按任意键退出！");
+
+             getchar();
+
+             exit(1);
+
+          }
+
+        fprintf(fp,"%s\n",b);
+
+        fclose(fp);
+
+      
+fp=fopen("c:\\m.txt","w");
+
+      
+if(fp==NULL)
+
+      
+{
+
+          printf("写文件m出错，按任意键退出！");
+
+          getchar();
+
+          exit(1);
+
+      
+}
+
+         fprintf(fp,"%d\n",m);
+
+      
+fclose(fp);
+
+      
+int x,y;
+
+    while(1)
+
+    {
+
+            mouse(&x,&y);
+
+           
+if(x>=35&&x<=(35+9)&&y>=12&&y<=14)
+
+            {
+
+              clean();
+
+              jiami();
+
+              break;
+
+          }
+
+    } 
+
+}
+
+void land()//登录 
+
+{ 
+
+ int i=0,j=0,m,x,y,l,k,ch;  
+
+ char c[40],d[40];
+
+ char a[10],b[10];
+
+ FILE *fp;
+
+    if((fp=fopen("c:\\yonghuming.txt","rt"))==NULL)
+
+    {
+
+        printf("读文件出错，按任意键退出！");
+
+        getchar();
+
+        exit(1);
+
+    }
+
+        fscanf(fp,"%s",a);
+
+    fclose(fp);
+
+    if((fp=fopen("c:\\mima.txt","rt"))==NULL)
+
+    {
+
+        printf("读文件出错，按任意键退出！");
+
+        getchar();
+
+        exit(1);
+
+    }
+
+        fscanf(fp,"%s",b);
+
+    fclose(fp);
+
+    if((fp=fopen("c:\\m.txt","rt"))==NULL)
+
+    {
+
+        printf("读文件出错，按任意键退出！");
+
+        getchar();
+
+        exit(1);
+
+    }
+
+        fscanf(fp,"%d",&m);
+
+    fclose(fp);
+
+    
+
+ HANDLE hOut;
+
+ printf("\n\n\n\n================================================================================\n");
+
+ printf("         ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★
+★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★      
+\n");
+
+        
+
+ COORD pos1= {31,8}, pos2= {29,10}; 
+
+ printf("\t\t\t用户名:\n\n\t\t\t密码:\n\n");
+
+ printf("\n                                   | 登录 |\n\n");
+
+ printf("         ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★
+★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★      
+\n"); 
+
+ 
+printf("================================================================================\n");
+
+       
+
+ hOut =
+GetStdHandle(STD_OUTPUT_HANDLE);     
+
+ SetConsoleCursorPosition(hOut, pos1);
+
+ scanf("%s",c); 
+
+ SetConsoleCursorPosition(hOut,
+pos2);
+
+ while(j<m)
+
+ {
+
+    d[j]=getch();
+
+    putchar('*');
+
+    j++;
+
+ }
+
+ /*while(ch=getch())
+
+ {
+
+    printf("sd");
+
+    if(ch=='r')
+
+    {
+
+        d[i]='\0';
+
+        break;
+
+    }
+
+    else
+if(ch='\b')
+
+    {
+
+        if(i==0)printf("\a");
+
+        else
+
+        {
+
+            printf("\b
+\b");
+
+            i--;
+
+        }
+
+    }
+
+    else
+if(isspace(ch)==0)
+
+    {
+
+        putchar('*');
+
+        d[i]=ch;
+
+        i++;
+
+    }
+
+ }*/
+
+ d[j] = '\0';
+
+ l=strcmp(a,c);
+
+ k=strcmp(b,d);
+
+ while(1)
+
+    {
+
+       mouse(&x,&y);
+
+      
+if(x>=35&&x<=(35+9)&&y>=12&&y<=14)
+
+       {
+
+         if(l==0&&k==0)
+
+         {
+
+        
+
+           system("cls");
+
+           printf("\n\n\n\n\n\n\n\n\t\t\t\t★登录成功!★");
+
+           Sleep(2000);
+
+           menu();
+
+           break;
+
+         }
+
+        else
+
+        {
+
+           if(l!=0&&k==0)
+
+           {
+
+             clean();
+
+             printf("\n\n\n\n\n\n\n\n\t\t\t  ★用户名错误!★");
+
+             Sleep(2000);
+
+             clean();
+
+             land();
+
+          
+
+           } 
+
+            if(l==0&&k!=0)
+
+            {
+
+              clean();
+
+              printf("\n\n\n\n\n\n\n\n\t\t\t  ★密码错误!★");
+
+              Sleep(2000);
+
+              clean();
+
+              land();
+
+            } 
+
+            if(l!=0&&k!=0)
+
+            {
+
+              clean();
+
+              printf("%s",c);
+
+              printf("%s",d);
+
+              printf("\n\n\n\n\n\n\n\n\t\t\t  ★登陆失败!★");
+
+              Sleep(2000);
+
+              clean();
+
+              land();
+
+            } 
+
+        }
+
+       }
+
+  }
+
+}
+
+void jiami()
+
+{
+
+    
+
+    int i;
+
+    int x;
+
+    static int m;
+
+    do
+
+    {
+
+     
+clean();
+
+     
+//system("color 5E");
+
+     
+printf("          \n");
+
+     
+printf("          \n");
+
+     
+printf("          \n"); 
+
+     
+printf("  
+======================================================================
+\n");  
+
+     
+printf("\t\t    ※※※※※※  您好，欢迎登陆！ ※※※※※※\n");
+
+     
+printf("  
+======================================================================\n");
+
+
+     
+printf("  
+|--------------------------  ★  1.注册  ★　------------------------|\n\n");
+
+     
+printf("   |--------------------------  ★　2.登陆  ★　------------------------|\n\n");
+
+     
+printf("  
+|--------------------------  ★　0.退出  ★　------------------------|\n\n");
+
+     
+printf("  
+======================================================================\n");
+
+     
+printf("\n                            请输入序号:"); 
+
+     
+//fflush(stdin); 
+
+     
+scanf("%14d",&x);
+
+     
+clean();
+
+     
+switch(x)
+
+     
+{
+
+          case 1:
+
+            reg(); 
+
+            break;
+
+          case 2:
+
+            land();
+
+            break;
+
+          case 0:
+
+            clean();
+
+            system("color
+1E"); 
+
+            printf("          \n");
+
+            printf("          \n"); 
+
+            printf("          \n"); 
+
+            printf("          \n");
+
+            printf("          \n");
+
+            printf("                               ★退出!★");
+
+            printf("\n                         ");
+
+            for(i=0;i<6;i++)
+
+            {
+
+              printf("->  ");
+
+              Sleep(800);
+
+            }
+
+            clean();
+
+            break;
+
+          default:
+
+            clean();
+
+            //system("color
+4E"); 
+
+            printf("          \n");
+
+            printf("          \n");
+
+            printf("          \n"); 
+
+            printf("                         ★输入错误，请输入0~2★"); 
+
+            Sleep(2000);
+
+            fflush(stdin);
+
+            break;
+
+      }
+
+  }while(x!=0);
+
+}
+
+int main()
+
+{
+
+    
+
+    jiami();
+
+    
+
+}
+
