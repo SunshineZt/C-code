@@ -1,0 +1,633 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<string.h>
+
+#include<windows.h>
+
+#include<conio.h>
+
+#define N 20
+
+struct person
+
+{
+
+    char
+name[20];
+
+    char
+num[20];
+
+    char
+type[20];
+
+    struct
+person *next;
+
+};
+
+void save(person *head)
+
+{
+
+    person
+*stu;
+
+    FILE *fp;
+
+    fp=fopen("d:\\ssl.txt","wt");
+
+    if(fp==NULL)
+
+    {
+
+        printf("写文件出错，按任意键退出！");
+
+        getch();
+
+        exit(1);
+
+    }
+
+    for(stu=head->next;stu!=NULL;stu=stu->next)
+
+        fprintf(fp,"%s
+%s %s\n",stu->name,stu->num,stu->type);
+
+//  fprintf(fp,"%s
+%d %s %s",stu->name,stu->num,stu->qq,stu->weixin);
+
+    printf("\n文件已保存成功,请按任意键退出!\n");
+
+    getch(); 
+
+    fclose(fp);
+
+}
+
+person *read()
+
+{
+
+    person
+*head,*r,*stu;
+
+    FILE *fp;
+
+    if((fp=fopen("d:\\ssl.txt","rt"))==NULL)
+
+    {
+
+        printf("读文件出错，按任意键退出！");
+
+        getch();
+
+        exit(1);
+
+    }
+
+    
+
+    head=(person*)malloc(sizeof(struct
+person));
+
+    head->next=NULL;
+
+    r=head;
+
+    
+
+while(!feof(fp))
+
+    {
+
+    
+
+        stu=(person*)malloc(sizeof(struct
+person));
+
+        fscanf(fp,"%s
+%s %s",stu->name,stu->num,stu->type);
+
+        r->next=stu;
+
+        r=stu;
+
+        
+
+    }
+
+ 
+
+    r->next=NULL;
+
+    fclose(fp);
+
+    printf("\n文件读取正确,请按任意键继续！\n");
+
+    getch(); 
+
+    
+
+    return
+head;
+
+}
+
+struct person *Create()
+
+{
+
+    struct
+person *m,*r,*head;
+
+    int n;
+
+    printf("\t\t请输入打算存储的人数:");
+
+    scanf("%d",&n);
+
+    head=(struct
+person*)malloc(sizeof(struct person));
+
+    head->next=NULL;
+
+    m=head;
+
+    while(n--)
+
+    {
+
+        r=(struct
+person*)malloc(sizeof(struct person));
+
+        printf("\t\t请输入姓名:");
+
+        scanf("%s",r->name);
+
+        printf("\t\t请输入电话号码:");
+
+        scanf("%s",r->num);
+
+        //r->age=age;
+
+        printf("\t\t请输入类别:");
+
+        scanf("%s",r->type);
+
+        m->next=r;
+
+        
+
+        m=r;    
+
+    }
+
+    m->next=NULL;
+
+    return
+head;
+
+}
+
+void print(struct person *head)
+
+{
+
+    struct
+person *m;
+
+    m=head->next;
+
+    printf("姓名------电话号码--------类别---\n");
+
+    while(m!=NULL)
+
+    {
+
+        printf("%s
+%s %s",m->name,m->num,m->type);
+
+        printf("\n");
+
+        m=m->next;
+
+    }
+
+    
+
+}
+
+void insert(struct person *head)
+
+{
+
+    struct
+person *m,*r;
+
+    m=head;
+
+    int n;
+
+    printf("请输入打算增添的人数:");
+
+    scanf("%d",&n);
+
+    while(n--)
+
+    {
+
+      r=(struct person*)malloc(sizeof(struct
+person));
+
+      printf("请输入增添姓名:");
+
+      scanf("%s",r->name);
+
+      printf("请输入增添电话号码:");
+
+      scanf("%s",r->num);
+
+      printf("请输入增添类别:");
+
+      scanf("%s",r->type);
+
+      r->next=m->next;
+
+      m->next=r;
+
+    }
+
+}
+
+void Delete(struct person *head)
+
+{
+
+    struct
+person *m,*t;
+
+    char
+a[10];
+
+    m=head;
+
+    t=m->next;
+
+    printf("请输入想删除人的名字:");
+
+    scanf("%s",a);
+
+    while(t!=NULL)
+
+    {
+
+        if(strcmp(a,t->name)==0)
+
+        {
+
+            m->next=t->next;
+
+            t=m->next;
+
+        }
+
+        else
+
+        {
+
+          m=m->next;
+
+          t=t->next;
+
+        }
+
+    }
+
+    
+
+}
+
+void change(struct person *head)
+
+{
+
+    struct
+person *m,*t;
+
+    char
+a[10];
+
+    m=head;
+
+    t=m->next;
+
+    printf("请输入要修改的姓名:");
+
+    scanf("%s",a);
+
+    while(t!=NULL)
+
+    {
+
+        if(strcmp(a,t->name)==0)
+
+        {
+
+            printf("请输入要修改的电话号码:");
+
+            scanf("%s",t->num);
+
+            printf("请输入要修改的类别:");
+
+            scanf("%s",t->type);
+
+            break;
+
+        }
+
+          m=m->next;
+
+          t=t->next;
+
+    }
+
+    
+
+}
+
+void check(struct person *head)
+
+{
+
+    struct
+person *m;
+
+    char
+a[10];
+
+    m=head->next;
+
+    printf("请输入想查询人的名字:");
+
+    scanf("%s",a);
+
+    while(m!=NULL)
+
+    {
+
+        if(strcmp(a,m->name)==0)
+
+        {
+
+          printf("姓名------电话号码--------类别---\n");
+
+          printf("%-10s %-10s
+%10s",m->name,m->num,m->type);
+
+          printf("\n");
+
+          break;
+
+        }
+
+        m=m->next;
+
+    }
+
+    
+
+}
+
+void sort(person *head)
+
+{
+
+   person
+*p,*m,*r,*tail;
+
+  
+tail=NULL;
+
+  
+while(head->next->next!=tail)
+
+   {
+
+      for
+(m=head->next,r=head;m->next!=tail;r=r->next,m=m->next)
+
+      {
+
+          
+p=m->next;
+
+          
+if (m->num>p->num)
+
+           {
+
+              
+r->next = p;
+
+              
+m->next = p->next;
+
+              
+p->next =m;
+
+              
+m= r->next;
+
+           }
+
+      }
+
+     
+tail=m;
+
+    }
+
+print(head);
+
+}
+
+int main()
+
+{
+
+    int a;
+
+//  struct
+person *head; 
+
+    do
+
+    {
+
+        system("cls");
+
+    printf("\n\n\n\n\t-------------------请输入想执行步骤前面的序号------------------\n");
+
+    printf("\t                        1.输入联系人信息\n                          ");
+
+    printf("\t2.增添联系人信息\n                          ");
+
+    printf("\t3.删除联系人信息\n                          ");
+
+    printf("\t4.修改联系人信息\n                          ");
+
+    printf("\t5.查询联系人信息\n                          ");
+
+    printf("\t6.按电话号码排序\n                            ");
+
+    printf("\t7.打印输出\n                            ");
+
+    printf("\t0.退出\n                            ");
+
+    struct
+person *head; 
+
+    printf("请输入要执行步骤前的序号：");
+
+    scanf("%14d",&a);
+
+
+    switch(a)
+
+    {
+
+        case
+1:
+
+            system("cls");
+
+            head=Create();
+
+            save(head);
+
+            printf("输入成功，输出结果为:\n");
+
+            print(head);
+
+            Sleep(5000);
+
+            break;
+
+        case 2:
+
+            system("cls");
+
+            insert(head);
+
+            save(head);
+
+            print(head);
+
+            Sleep(5000);
+
+            break;
+
+        case
+3:
+
+            system("cls");
+
+            Delete(head);
+
+            save(head);
+
+            print(head);
+
+            Sleep(5000);
+
+            break;
+
+        case
+4:
+
+            system("cls");
+
+            change(head);
+
+            save(head);
+
+            print(head);
+
+            Sleep(5000);
+
+            break;
+
+        case
+5:
+
+            system("cls");
+
+            head=read();
+
+            check(head);
+
+            Sleep(5000);
+
+            break;
+
+        case
+6:
+
+            system("cls");
+
+            sort(head);
+
+            save(head);
+
+            Sleep(5000);
+
+            break;
+
+        case
+7:
+
+            system("cls");
+
+            head=read();
+
+            print(head);
+
+            save(head);
+
+            Sleep(5000);
+
+            break;
+
+        case
+0:
+
+            system("cls");
+
+            break;
+
+
+        default:
+
+            system("cls");
+
+            printf("                  您输入错误，请输入您想执行步骤前面的数字");
+
+            Sleep(5000);
+
+            break;
+
+    }
+
+}while(a!=0);
+
+    return 0;
+
+}
+
+ 
+
