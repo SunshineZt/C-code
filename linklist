@@ -1,0 +1,196 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<time.h>
+
+ 
+
+typedef struct LinkList
+
+{
+
+    int data;
+
+ 
+
+ struct LinkList *next;
+
+ 
+
+}LinkList;
+
+ 
+
+void InitList(LinkList *&L)
+
+{
+
+   L=(LinkList
+*)malloc(sizeof(LinkList));
+
+ 
+
+   L->next=NULL;
+
+}
+
+ 
+
+void CreateList(LinkList *&L)
+
+{
+
+   LinkList *s,*p;
+
+ 
+
+   int i=0;
+
+ 
+
+   p=L;
+
+ 
+
+   for(i=0; i<10; i++) //必须使用尾插入法 来建立循环链表
+
+   {
+
+      s=(LinkList
+*)malloc(sizeof(LinkList));
+
+ 
+
+   s->data=rand()%(33-1+1)+1;
+
+ 
+
+   p->next=s;
+
+ 
+
+   p=s;
+
+   }
+
+ 
+
+   p->next=L;
+
+ 
+
+}
+
+ 
+
+void LengthList(LinkList *L)
+
+{
+
+    int i=0;
+
+ 
+
+ LinkList *p;
+
+ 
+
+ p=L->next;
+
+ 
+
+ while(p!=L)
+
+ {
+
+       i++;
+
+ 
+
+    p=p->next;
+
+ }
+
+ 
+
+    printf("\n 循环链表长度:
+%d\n", i);
+
+}
+
+ 
+
+void Display(LinkList *L)
+
+{
+
+     LinkList *p;
+
+ 
+
+  p=L->next;
+
+ 
+
+  printf(" 下面输出循环链表的内容:\n");
+
+ 
+
+  while(p!=L)
+
+  {
+
+   printf("%d ",
+p->data);
+
+ 
+
+   p=p->next;
+
+  }
+
+ 
+
+  printf("\n");
+
+ 
+
+  LengthList(L);
+
+ 
+
+}
+
+ 
+
+int main()
+
+{
+
+ srand((unsigned)time(NULL));
+
+ 
+
+    LinkList *L;
+
+ 
+
+ InitList(L);
+
+ 
+
+ CreateList(L);
+
+ 
+
+ Display(L);
+
+ return 0;
+
+ 
+
+} 
+
