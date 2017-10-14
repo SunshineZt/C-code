@@ -1,0 +1,63 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<string.h> 
+
+int main()
+
+{
+
+    char a[5][20],t[20];
+
+    int i,j;
+
+    printf("输入字符串:\n");
+
+    for(i=0;i<5;i++)
+
+    {
+
+    printf("\nplease input %d
+name is:",i+1) ;
+
+        fflush(stdin);
+
+        gets(a[i]);
+
+    } 
+
+    for(i=0;i<4;i++){
+
+        for(j=i;j<5;j++){
+
+            if(strcmp(a[i],a[j])>0){
+
+            strcpy(t,a[i]);
+
+            strcpy(a[i],a[j]);
+
+            strcpy(a[j],t);
+
+        }
+
+        }
+
+        
+
+    }
+
+    printf("\n按字典顺序输出的字符串:\n");
+
+    for(i=0;i<5;i++){
+
+        puts(a[i]);
+
+    }
+
+    return 0;
+
+} 
+
