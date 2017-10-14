@@ -1,0 +1,59 @@
+
+
+#include<stdio.h>
+
+int main()
+
+{
+
+   int i=0,k;
+
+   int j;
+
+   int a[10];
+
+  
+while(scanf("%d",&k)!=EOF){
+
+   i=0;
+
+   while(k>0)
+
+   {
+
+      a[i]=k%10;
+
+      k=k/10;
+
+      i++;
+
+      
+
+}
+
+   printf("%d ",i);
+
+ 
+
+   
+
+    for(j=i-1;j>=0;j--){
+
+    
+
+    printf("%d ",a[j]);
+
+    
+
+    }
+
+} 
+
+   
+
+return 0;
+
+}
+
+   
+
