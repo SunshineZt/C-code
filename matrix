@@ -1,0 +1,48 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<math.h>
+
+int main(){
+
+    int m,i,j,k;
+
+    int n;
+
+    scanf("%d",&n);
+
+    printf("n=%d时的方阵\n",n);
+
+    for(i=1,k=1;i<=n;i++){
+
+        for(j=1;j<k;j++);
+
+        printf("%4d",j);
+
+        for(j=1;j<=n-2*k+2;j++)
+
+        printf("%4d",k);
+
+        for(j=k-1;j>=1;j--)
+
+        printf("\n");
+
+        if(i<n/2) k++;
+
+        else    k--;
+
+        if(i==n/2&&n%2==0)
+
+        k--;
+
+        
+
+    }
+
+    return 0;
+
+} 
+
