@@ -1,0 +1,111 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+#include<string.h>
+
+enum week{sun=7,mon=1,tue,wed,thu,fri,sat};
+
+struct date
+
+{
+
+    int year;
+
+    int month;
+
+    int day;
+
+    enum   week 
+weekday;
+
+};
+
+int main ()
+
+{
+
+    struct date data;
+
+    int n,i,j;
+
+    int weekday;
+
+    printf("请输入年月日:");
+
+    scanf("%d %d
+%d",&data.year,&data.month,&data.day);
+
+    i=data.month;
+
+    j=data.year;
+
+    if(i==1)
+
+    {j=j-1;
+
+        i=13;
+
+    n=(data.day+1+2*i+3*(i+1)/5+j+j/4-j/100+j/400)%7;
+
+    }
+
+    else if(i==2)
+
+    {j=j-1;
+
+    i=14;
+
+        n=(data.day+1+2*i+3*(i+1)/5+j+j/4-j/100+j/400)%7;
+
+    }
+
+    else
+
+ n=(data.day+1+2*data.month+3*(data.month+1)/5+data.year+data.year/4-data.year/100+data.year/400)%7;
+
+    if(n==0)   n=7;
+
+    weekday=(enum week)n;
+
+    printf("输入的日期为周几:\n");
+
+    switch(weekday)
+
+    {
+
+        case sun
+:printf("%d-%d-%d",data.year,data.month,data.day); printf("sunday\n");break;
+
+        case mon
+:printf("%d-%d-%d",data.year,data.month,data.day);
+printf("monday\n");break;
+
+        case tue
+:printf("%d-%d-%d",data.year,data.month,data.day);
+printf("tueday\n");break;
+
+        case wed
+:printf("%d-%d-%d",data.year,data.month,data.day); printf("wednesday\n");break;
+
+        case thu
+:printf("%d-%d-%d",data.year,data.month,data.day);
+printf("thuesday\n");break;
+
+        case sat
+:printf("%d-%d-%d",data.year,data.month,data.day);
+printf("saturday\n");break;
+
+        default :printf("input
+error!\n");break;
+
+    }
+
+    return 0;
+
+    
+
+} 
+
