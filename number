@@ -1,0 +1,57 @@
+
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+void number()
+
+{
+
+    int i,m,j;
+
+    for(i=1;i<1000;i++)
+
+    {
+
+        m=0;
+
+    for(j=1;j<1000;j++){
+
+        if(i%j==0&&i!=j)
+
+        {
+
+            m+=j;
+
+        }
+
+    
+
+    }
+
+    if(m==i)
+
+    printf("%3d",i);
+
+    
+
+}
+
+}
+
+int main()
+
+{
+
+    int k;
+
+    printf("1000 nei de wan shu
+wei : ");
+
+    number();
+
+    return 0;
+
+}
+
